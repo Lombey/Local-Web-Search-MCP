@@ -1,0 +1,266 @@
+use_default_settings: true
+
+server:
+  secret_key: "change-me-in-production"
+  limiter: false
+  public_instance: false
+  image_proxy: false
+
+search:
+  safe_search: 0
+  autocomplete: ""
+  default_lang: "es-AR"
+  formats:
+    - html
+    - json
+
+engines:
+  # =========================================================================
+  # GENERAL (motores principales)
+  # =========================================================================
+  - name: google
+    engine: google
+    shortcut: go
+    disabled: false
+    categories: [general, it]
+  - name: bing
+    engine: bing
+    shortcut: bi
+    disabled: false
+    categories: [general, it]
+  - name: duckduckgo
+    engine: duckduckgo
+    shortcut: ddg
+    disabled: false
+    categories: [general, it]
+  - name: brave
+    engine: brave
+    shortcut: br
+    disabled: false
+    categories: [general, it]
+    timeout: 6.0
+    soft_max_redirects: 2
+  - name: yahoo
+    engine: yahoo
+    shortcut: yh
+    disabled: false
+    categories: general
+  - name: qwant
+    engine: qwant
+    shortcut: qw
+    disabled: false
+    categories: general
+  # mojeek y startpage removidos (access denied / parsing error)
+
+  # =========================================================================
+  # IT / DEVELOPMENT
+  # =========================================================================
+  - name: github
+    engine: github
+    shortcut: gh
+    disabled: false
+    categories: it
+  - name: gitlab
+    engine: gitlab
+    shortcut: gl
+    disabled: false
+    categories: it
+  - name: npm
+    engine: npm
+    shortcut: npm
+    disabled: false
+    categories: it
+  - name: pypi
+    engine: pypi
+    shortcut: pypi
+    disabled: false
+    categories: it
+  - name: crates.io
+    engine: crates
+    shortcut: crates
+    disabled: false
+    categories: it
+  - name: hacker news
+    engine: hackernews
+    shortcut: hack
+    disabled: false
+    categories: [it, news]
+
+  # =========================================================================
+  # SOCIAL MEDIA / FORUMS
+  # =========================================================================
+  - name: reddit
+    engine: reddit
+    shortcut: rdt
+    disabled: false
+    categories: [social_media]  # Removido de general/it para no dominar resultados
+  - name: lemmy posts
+    engine: lemmy
+    shortcut: lepo
+    disabled: false
+    categories: [social_media, it]
+  - name: mastodon hashtags
+    engine: mastodon
+    shortcut: mah
+    disabled: false
+    categories: social_media
+    mastodon_type: hashtags
+  - name: mastodon users
+    engine: mastodon
+    shortcut: mau
+    disabled: false
+    categories: social_media
+    mastodon_type: accounts
+
+  # =========================================================================
+  # VIDEOS
+  # =========================================================================
+  - name: youtube
+    engine: youtube_noapi
+    shortcut: yt
+    disabled: false
+    categories: videos
+  - name: vimeo
+    engine: vimeo
+    shortcut: vm
+    disabled: false
+    categories: videos
+  - name: dailymotion
+    engine: dailymotion
+    shortcut: dm
+    disabled: false
+    categories: videos
+  - name: google videos
+    engine: google_videos
+    shortcut: gov
+    disabled: false
+    categories: videos
+  - name: bing videos
+    engine: bing_videos
+    shortcut: biv
+    disabled: false
+    categories: videos
+
+  # =========================================================================
+  # IMAGES
+  # =========================================================================
+  - name: google images
+    engine: google_images
+    shortcut: goi
+    disabled: false
+    categories: images
+  - name: bing images
+    engine: bing_images
+    shortcut: bii
+    disabled: false
+    categories: images
+  - name: duckduckgo images
+    engine: duckduckgo
+    shortcut: ddi
+    disabled: false
+    categories: images
+    params:
+      type: images
+  - name: unsplash
+    engine: unsplash
+    shortcut: us
+    disabled: false
+    categories: images
+
+  # =========================================================================
+  # NEWS (noticias de múltiples fuentes)
+  # =========================================================================
+  - name: google news
+    engine: google_news
+    shortcut: gn
+    disabled: false
+    categories: news
+  - name: bing news
+    engine: bing_news
+    shortcut: bin
+    disabled: false
+    categories: news
+  - name: yahoo news
+    engine: yahoo_news
+    shortcut: yhn
+    disabled: false
+    categories: news
+  - name: duckduckgo news
+    engine: duckduckgo
+    shortcut: ddn
+    disabled: false
+    categories: news
+    params:
+      type: news
+  - name: brave news
+    engine: brave
+    shortcut: brn
+    disabled: false
+    categories: news
+    brave_category: news
+  - name: qwant news
+    engine: qwant
+    shortcut: qwn
+    disabled: false
+    categories: news
+    qwant_categ: news
+  - name: reuters
+    engine: reuters
+    shortcut: reu
+    disabled: false
+    categories: news
+
+  # Science/Academic (google scholar también en general para PDFs)
+  - name: google scholar
+    engine: google_scholar
+    shortcut: gs
+    disabled: false
+    categories: [science, general]
+  - name: arxiv
+    engine: arxiv
+    shortcut: ar
+    disabled: false
+    categories: science
+  - name: semantic scholar
+    engine: semantic_scholar
+    shortcut: ss
+    disabled: false
+    categories: science
+  - name: pubmed
+    engine: pubmed
+    shortcut: pm
+    disabled: false
+    categories: science
+  - name: crossref
+    engine: crossref
+    shortcut: cr
+    disabled: false
+    categories: science
+
+  # =========================================================================
+  # KNOWLEDGE / REFERENCE
+  # =========================================================================
+  - name: wikipedia
+    engine: wikipedia
+    shortcut: wp
+    disabled: false
+    categories: [general, knowledge]
+  - name: wikidata
+    engine: wikidata
+    shortcut: wd
+    disabled: false
+    categories: knowledge
+  - name: currency
+    engine: currency_convert
+    shortcut: cc
+    disabled: false
+    categories: general
+
+  # =========================================================================
+  # BOOKS / DOCUMENTS
+  # =========================================================================
+  - name: openlibrary
+    engine: openlibrary
+    shortcut: ol
+    disabled: false
+    categories: [general, books]
