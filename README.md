@@ -185,6 +185,19 @@ Query del usuario
 
 ## Configuración avanzada
 
+### Variables de entorno
+
+| Variable | Default | Descripción |
+|----------|---------|-------------|
+| `RERANKER_DEVICE` | `auto` | Device para CrossEncoder: `auto`, `cuda`, `cpu` |
+
+**Ejemplo para forzar GPU:**
+```bash
+RERANKER_DEVICE=cuda ./venv/bin/python src/mcp_web_search.py
+```
+
+**Nota WSL2:** GPU en WSL2 requiere NVIDIA Container Toolkit. En Linux nativo funciona directo.
+
 ### Parámetros en `src/mcp_web_search.py`
 
 ```python

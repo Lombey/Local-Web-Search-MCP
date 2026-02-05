@@ -17,6 +17,7 @@ v4 - Production Improvements:
 
 import json
 import logging
+import os
 import re
 import time
 from collections import defaultdict
@@ -41,6 +42,9 @@ SEARXNG_URL = "http://127.0.0.1:8888"
 # Fallback: cross-encoder/ms-marco-MiniLM-L-6-v2 (más rápido, menos preciso)
 RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
 RERANKER_FALLBACK = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+
+# Device: "auto" (detecta GPU si hay), "cuda", "cpu"
+RERANKER_DEVICE = os.getenv("RERANKER_DEVICE", "auto")
 
 SCRAPE_TIMEOUT = 5
 SCRAPE_MAX_CHARS = 5000  # Más contexto para mejor reranking
@@ -228,14 +232,18 @@ def _get_reranker():
     if _reranker is None:
         from sentence_transformers import CrossEncoder
 
+        # Determinar device: auto detecta GPU, o forzar cuda/cpu
+        device = None if RERANKER_DEVICE == "auto" else RERANKER_DEVICE
+
         try:
             _reranker = CrossEncoder(
                 RERANKER_MODEL,
                 trust_remote_code=True,
+                device=device,
             )
         except Exception:
             # Fallback a modelo más ligero
-            _reranker = CrossEncoder(RERANKER_FALLBACK)
+            _reranker = CrossEncoder(RERANKER_FALLBACK, device=device)
     return _reranker
 
 
