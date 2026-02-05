@@ -196,7 +196,57 @@ Query del usuario
 RERANKER_DEVICE=cuda ./venv/bin/python src/mcp_web_search.py
 ```
 
-**Nota WSL2:** GPU en WSL2 requiere NVIDIA Container Toolkit. En Linux nativo funciona directo.
+### GPU Support (AMD ROCm)
+
+El reranking es **33x más rápido** en GPU vs CPU.
+
+| GPU | Reranking 30 docs |
+|-----|-------------------|
+| AMD RX 9060 XT | 90ms |
+| CPU | 3000ms |
+
+#### Requisitos AMD ROCm (Linux/WSL2)
+
+1. **Windows (para WSL2):** AMD Adrenalin 26.1.1+ con soporte WSL2
+2. **WSL2/Linux:** ROCm 7.2+
+
+#### Instalación ROCm 7.2 en WSL2
+
+```bash
+# Descargar instalador
+wget https://repo.radeon.com/amdgpu-install/7.2/ubuntu/noble/amdgpu-install_7.2.70200-1_all.deb
+sudo apt install ./amdgpu-install_7.2.70200-1_all.deb
+
+# Instalar ROCm para WSL
+sudo amdgpu-install -y --usecase=wsl,rocm --no-dkms
+
+# Verificar
+rocminfo | grep "Marketing Name"
+```
+
+#### PyTorch con ROCm 7.2
+
+```bash
+cd ~/mcp/web-search
+source venv/bin/activate
+
+# Instalar PyTorch ROCm 7.2 desde AMD repo
+pip install 'https://repo.radeon.com/rocm/manylinux/rocm-rel-7.2/triton-3.5.1%2Brocm7.2.0.gita272dfa8-cp312-cp312-linux_x86_64.whl'
+pip install 'https://repo.radeon.com/rocm/manylinux/rocm-rel-7.2/torch-2.9.1%2Brocm7.2.0.lw.git7e1940d4-cp312-cp312-linux_x86_64.whl' --no-deps
+pip install 'https://repo.radeon.com/rocm/manylinux/rocm-rel-7.2/torchvision-0.24.0%2Brocm7.2.0.gitb919bd0c-cp312-cp312-linux_x86_64.whl' --no-deps
+
+# Verificar
+python -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device_name(0))"
+```
+
+#### GPUs AMD soportadas (ROCm 7.2)
+
+- RX 9060, RX 9060 XT, RX 9070, RX 9070 XT (RDNA4)
+- RX 7900 XTX, RX 7900 XT, RX 7800 XT, RX 7600 (RDNA3)
+
+### GPU Support (NVIDIA CUDA)
+
+Para NVIDIA, PyTorch detecta CUDA automáticamente. Solo instalar drivers NVIDIA y CUDA toolkit.
 
 ### Parámetros en `src/mcp_web_search.py`
 
