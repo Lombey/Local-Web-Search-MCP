@@ -43,14 +43,17 @@ engines:
   - name: yahoo
     engine: yahoo
     shortcut: yh
-    disabled: false
+    disabled: true   # 2026-08-21: ar.search.yahoo.com corta la conexión (crónico)
     categories: general
   - name: qwant
     engine: qwant
     shortcut: qw
     disabled: false
     categories: general
-  # mojeek y startpage removidos (access denied / parsing error)
+  - name: startpage
+    disabled: true   # 2026-08-21: CAPTCHA crónico; re-testear antes de reactivar
+  - name: google scholar
+    disabled: true   # 2026-08-21: 403 unusual traffic; solo afecta science, que el MCP no usa
 
   # =========================================================================
   # IT / DEVELOPMENT
@@ -89,11 +92,8 @@ engines:
   # =========================================================================
   # SOCIAL MEDIA / FORUMS
   # =========================================================================
-  - name: reddit
-    engine: reddit
-    shortcut: rdt
-    disabled: false
-    categories: [social_media]  # Removido de general/it para no dominar resultados
+  # reddit removido 2026-08-21: upstream eliminó el módulo searx/engines/reddit.py
+  # en la imagen nueva (FileNotFoundError); re-agregar solo si vuelve a existir
   - name: lemmy posts
     engine: lemmy
     shortcut: lepo
@@ -210,11 +210,11 @@ engines:
     disabled: false
     categories: news
 
-  # Science/Academic (google scholar también en general para PDFs)
+  # Science/Academic
   - name: google scholar
     engine: google_scholar
     shortcut: gs
-    disabled: false
+    disabled: true   # 2026-08-21: 403 unusual traffic (crónico); esta entrada pisa la de arriba
     categories: [science, general]
   - name: arxiv
     engine: arxiv
